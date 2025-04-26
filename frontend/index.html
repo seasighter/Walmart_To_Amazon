@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Walmart to Amazon Scraper</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Walmart to Amazon Scraper</h1>
+        <form id="scrapeForm" enctype="multipart/form-data">
+            <label for="inputType">Input Type:</label>
+            <select name="inputType" id="inputType">
+                <option value="single">Single URL</option>
+                <option value="csv">CSV File</option>
+            </select>
+
+            <div id="urlInput">
+                <label for="url">Walmart Product URL:</label>
+                <input type="text" id="url" name="url">
+            </div>
+
+            <div id="fileInput" style="display: none;">
+                <label for="file">CSV File:</label>
+                <input type="file" id="file" name="file">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
