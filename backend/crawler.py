@@ -57,10 +57,10 @@ def extract_walmart_data(driver, url):
 
 def search_amazon(driver, title, brand):
     print(f"Searching on Google: {title}")
-    driver.get("https://www.google.com/ncr")  # ✅ "ncr" = no country redirect
+    driver.get("https://www.google.com/ncr")  # "ncr" = no country redirect
     time.sleep(2)
 
-    # ✅ Try to accept cookies
+    # Try to accept cookies
     try:
         agree_button = driver.find_element(By.XPATH, '//button/div[contains(text(),"Accept all")]')
         agree_button.click()
@@ -78,7 +78,7 @@ def search_amazon(driver, title, brand):
     amazon_link = None
 
     try:
-        # ✅ Only pick links where the text is from search results (h3 inside a)
+        # Only pick links where the text is from search results (h3 inside a)
         results = driver.find_elements(By.XPATH, '//a/h3/..')
         for result in results:
             href = result.get_attribute('href')
