@@ -13,8 +13,9 @@ def create_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
-    prefs = {"profile.managed_default_content_settings.images": 2}
-    options.add_experimental_option("prefs", prefs)
+    # prefs = {"profile.managed_default_content_settings.images": 2}
+    # options.add_experimental_option("prefs", prefs)
+    options.page_load_strategy = "eager" 
     driver = uc.Chrome(options=options)
     return driver
 
@@ -48,10 +49,18 @@ def extract_walmart_data(driver, url):
         price = "N/A"
 
     try:
-        image_url = driver.find_element(By.CSS_SELECTOR, 'img[data-testid="product-image"]').get_attribute('src')
+        image_element = driver.find_element(By.CSS_SELECTOR, '#maincontent section img')
+        image_url = image_element.get_attribute('src')
+        if not image_url or image_url.strip() == "" or image_url.startswith("data:") or image_url == "about:blank":
+            raise Exception("Invalid image src")
     except Exception:
-        image_url = "N/A"
-
+        try:
+            # Fallback selector if the first fails
+            image_element = driver.find_element(By.CSS_SELECTOR, 'div[data-automation-id="mainImageContainer"] img')
+            image_url = image_element.get_attribute('src')
+        except Exception:
+            image_url = "N/A"
+    print(image_url)
     return title, brand, model, price, image_url
 
 
