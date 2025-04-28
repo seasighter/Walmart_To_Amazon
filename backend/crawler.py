@@ -54,13 +54,8 @@ def extract_walmart_data(driver, url):
         if not image_url or image_url.strip() == "" or image_url.startswith("data:") or image_url == "about:blank":
             raise Exception("Invalid image src")
     except Exception:
-        try:
-            # Fallback selector if the first fails
-            image_element = driver.find_element(By.CSS_SELECTOR, 'div[data-automation-id="mainImageContainer"] img')
-            image_url = image_element.get_attribute('src')
-        except Exception:
-            image_url = "N/A"
-    print(image_url)
+        image_url = "N/A"
+    # print(image_url)
     return title, brand, model, price, image_url
 
 
@@ -80,7 +75,7 @@ def search_amazon(driver, title, brand):
 
     search_box = driver.find_element(By.NAME, "q")
     search_box.clear()
-    search_box.send_keys(f"{title} {brand} site:amazon.com")
+    search_box.send_keys(f"{title} amazon.com")
     search_box.send_keys(Keys.RETURN)
     time.sleep(3)
 
@@ -238,7 +233,7 @@ def save_csv(results, filename="results.csv"):
 #     time.sleep(2)
 
 #     search_box = driver.find_element(By.NAME, "q")
-#     search_box.send_keys(f"{title} site:amazon.com")
+#     search_box.send_keys(f"{title} amazon.com")
 #     search_box.send_keys(Keys.RETURN)
 #     time.sleep(3)
 

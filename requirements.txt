@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+selenium
+pandas
+python-multipart
+aiofiles
+jinja2
