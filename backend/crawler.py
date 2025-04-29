@@ -5,6 +5,8 @@ import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
 def create_driver():
@@ -44,8 +46,12 @@ def extract_walmart_data(driver, url):
         model = "N/A"
 
     try:
-        price = driver.find_element(By.CSS_SELECTOR, '[data-automation-id="product-price"]').text
-    except Exception:
+        price_element = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//span[@itemprop='price']"))
+        )
+        price = price_element.text.strip()
+        print("Price:", price)
+    except Exception:   
         price = "N/A"
 
     try:
@@ -134,11 +140,3 @@ def process_walmart_links(urls):
 
     driver.quit()
     return results
-
-def save_csv(results, filename="results.csv"):
-    keys = results[0].keys()
-    with open(filename, "w", newline="", encoding="utf-8") as f:
-        dict_writer = csv.DictWriter(f, keys)
-        dict_writer.writeheader()
-        dict_writer.writerows(results)
-    print(f"Saved results to {filename}")

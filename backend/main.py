@@ -39,13 +39,15 @@ async def process(inputType: str = Form(...), url: str = Form(None), file: Uploa
     
     html_content = "<h2>Results:</h2>"
     for res in results:
-        html_content += f"<h3>Walmart URL: {res['walmart_url']}</h3>"
+        # html_content += f"<h3>Walmart URL: {res['walmart_url']}</h3>"
+        # html_content += f"<p><b>Walmart URL:</b><a href= '{res['walmart_url']}'>Link</a></p>"
         html_content += f"<p><b>Title:</b> {res['title']}</p>"
         html_content += f"<p><b>Brand:</b> {res['brand']}</p>"
         html_content += f"<p><b>Model:</b> {res['model']}</p>"
         html_content += f"<p><b>Price:</b> {res['price']}</p>"
         html_content += f"<p><b>Image URL:</b> <a href='{res['image_url']}' target='_blank'>View Image</a></p>"
-        html_content += f"<p><b>Amazon URL:</b> {res['amazon_url']}</p>"
+        # html_content += f"<p><b>Amazon URL:</b> {res['amazon_url']}</p>"
+        html_content += f"<p><b>Amazon URL:</b><a href= '{res['amazon_url']}'>Click Here to open Amazon product page</a></p>"
         html_content += "<hr>"
     
     return HTMLResponse(content=html_content)
